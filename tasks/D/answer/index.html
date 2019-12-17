@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+    .table {
+      overflow: hidden;
+      height: 240px;
+      width: 240px;
+    }
+    .row {
+      display: block;
+    }
+    .row::after {
+      clear: both;
+      display: block;
+      content: '';
+    }
+    .cell {
+      height: 30px;
+      width: 30px;
+      display: block;
+      float: left;
+      background: #745853;
+    }
+    .row:nth-child(2n + 1) > .cell:nth-child(2n + 1) {
+      background: #f4cd8d;
+    }
+    .row:nth-child(2n) > .cell:nth-child(2n + 1) {
+      background: #745853;
+    }
+    .row:nth-child(2n + 1) > .cell:nth-child(2n) {
+      background: #745853;
+    }
+    .row:nth-child(2n) > .cell:nth-child(2n) {
+      background: #f4cd8d;
+    }
+    .cell:focus {
+      background: red!important;
+      outline: none;
+      position: relative;
+    }
+    .cell:focus::after {
+      content: '';
+      pointer-events: none;
+      height: 150px;
+      width: 150px;
+      position: absolute;
+      top: -60px;
+      left: -60px;
+      background: linear-gradient(blue, blue) 30px 0 / 30px 30px no-repeat,linear-gradient(blue, blue) 0 30px / 30px 30px no-repeat,linear-gradient(blue, blue) 90px 0 / 30px 30px no-repeat,linear-gradient(blue, blue) 0 90px / 30px 30px no-repeat,linear-gradient(blue, blue) 30px 120px / 30px 30px no-repeat,linear-gradient(blue, blue) 90px 120px / 30px 30px no-repeat,linear-gradient(blue, blue) 120px 90px / 30px 30px no-repeat,linear-gradient(blue, blue) 120px 30px / 30px 30px no-repeat;
+    }
+  </style>
+</head>
+<body>
+  <div class="table">
+    <div class="row">
+      <div class="cell" tabindex="0"></div>
+      <div class="cell" tabindex="0"></div>
+      <div class="cell" tabindex="0"></div>
+      <div class="cell" tabindex="0"></div>
+      <div class="cell" tabindex="0"></div>
+      <div class="cell" tabindex="0"></div>
+      <div class="cell" tabindex="0"></div>
+      <div class="cell" tabindex="0"></div>
+    </div>
+    <div class="row">
+      <div class="cell" tabindex="0"></div>
+      <div class="cell" tabindex="0"></div>
+      <div class="cell" tabindex="0"></div>
+      <div class="cell" tabindex="0"></div>
+      <div class="cell" tabindex="0"></div>
+      <div class="cell" tabindex="0"></div>
+      <div class="cell" tabindex="0"></div>
+      <div class="cell" tabindex="0"></div>
+    </div>
+    <div class="row">
+      <div class="cell" tabindex="0"></div>
+      <div class="cell" tabindex="0"></div>
+      <div class="cell" tabindex="0"></div>
+      <div class="cell" tabindex="0"></div>
+      <div class="cell" tabindex="0"></div>
+      <div class="cell" tabindex="0"></div>
+      <div class="cell" tabindex="0"></div>
+      <div class="cell" tabindex="0"></div>
+    </div>
+    <div class="row">
+      <div class="cell" tabindex="0"></div>
+      <div class="cell" tabindex="0"></div>
+      <div class="cell" tabindex="0"></div>
+      <div class="cell" tabindex="0"></div>
+      <div class="cell" tabindex="0"></div>
+      <div class="cell" tabindex="0"></div>
+      <div class="cell" tabindex="0"></div>
+      <div class="cell" tabindex="0"></div>
+    </div>
+    <div class="row">
+      <div class="cell" tabindex="0"></div>
+      <div class="cell" tabindex="0"></div>
+      <div class="cell" tabindex="0"></div>
+      <div class="cell" tabindex="0"></div>
+      <div class="cell" tabindex="0"></div>
+      <div class="cell" tabindex="0"></div>
+      <div class="cell" tabindex="0"></div>
+      <div class="cell" tabindex="0"></div>
+    </div>
+    <div class="row">
+      <div class="cell" tabindex="0"></div>
+      <div class="cell" tabindex="0"></div>
+      <div class="cell" tabindex="0"></div>
+      <div class="cell" tabindex="0"></div>
+      <div class="cell" tabindex="0"></div>
+      <div class="cell" tabindex="0"></div>
+      <div class="cell" tabindex="0"></div>
+      <div class="cell" tabindex="0"></div>
+    </div>
+    <div class="row">
+      <div class="cell" tabindex="0"></div>
+      <div class="cell" tabindex="0"></div>
+      <div class="cell" tabindex="0"></div>
+      <div class="cell" tabindex="0"></div>
+      <div class="cell" tabindex="0"></div>
+      <div class="cell" tabindex="0"></div>
+      <div class="cell" tabindex="0"></div>
+      <div class="cell" tabindex="0"></div>
+    </div>
+    <div class="row">
+      <div class="cell" tabindex="0"></div>
+      <div class="cell" tabindex="0"></div>
+      <div class="cell" tabindex="0"></div>
+      <div class="cell" tabindex="0"></div>
+      <div class="cell" tabindex="0"></div>
+      <div class="cell" tabindex="0"></div>
+      <div class="cell" tabindex="0"></div>
+      <div class="cell" tabindex="0"></div>
+    </div>    
+  </div>
+</body>
+</html>

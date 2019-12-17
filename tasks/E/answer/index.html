@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div class="world"></div>
+  <script>
+    const module = {}; // compatibility
+
+    // task start -->
+
+    function main(arr) {
+
+      function getSuns(arr) {
+        return arr.reduce((acc, curr, index) => {
+          if (100 < curr && curr < 150) {
+            acc.push(index);
+          }
+          return acc;
+        }, []);
+      }
+
+      function getStars(arr) {
+        return arr.reduce((acc, curr, index) => {
+          if (curr >= 150) {
+            acc.push(index);
+          }
+          return acc;
+        }, []);
+      }
+
+      function getDiamonds(arr) {
+        return arr.reduce((acc, curr, index) => {
+          if (curr < -100 && (arr[index - 1] >= 0 || arr[index + 1] >= 0)) {
+            acc.push(index);
+          }
+          return acc;
+        }, []);
+      }
+
+      function getMount(arr) {
+        const mounts = arr.reduce((acc, curr, index) => {
+          if (curr >= 30 && curr <= 100 && (arr[index - 1] === arr[index + 1] && arr[index - 1] < curr && arr[index - 1] > 0)) {
+            acc.push(index);
+          }
+          return acc;
+        }, []);
+
+        let maxSum = -Infinity;
+        let maxIndex = [];
+
+        for (const mount of mounts) {
+          let sum = Math.abs(arr[mount]);
+          const indexes = [mount];
+
+          for (let l = 1; arr[mount - l] === arr[mount + l] && arr[mount - l] < arr[mount - l + 1] && arr[mount - l] > 0; l++) {
+            sum += Math.abs(arr[mount - l]) * 2;
+            indexes.push(mount - l, mount + l);
+          }
+
+          if (maxSum < sum) {
+            maxSum = sum;
+            maxIndex = indexes;
+          }
+        }
+
+        return maxIndex;
+      }
+
+      function getLake(arr) {
+        return getMount(arr.map(x => -x));
+      }
+
+      const minHeight = Math.min.apply(null, arr);
+      const maxHeight = Math.max.apply(null, arr);
+      const height = Math.abs(minHeight) + Math.abs(maxHeight);
+      const width = arr.length * 10;
+
+      const world = document.getElementsByClassName('world')[0];
+      world.style.height = height + 'px';
+      world.style.width = width + 'px';
+
+      const sky = document.createElement('div');
+      world.appendChild(sky);
+      sky.classList.add('sky');
+      sky.style.height = Math.max(0, maxHeight) + 'px';
+
+      function drawPixel(index, className) { /* diamond, sun, star */
+        const el = document.createElement('div');
+        el.classList.add(className);
+        el.style.left = index * 10 + 'px';
+        el.style.bottom = arr[index] - (arr[index] > 0 ? 10 : 0) + 'px';
+        sky.appendChild(el);
+      }
+
+      const suns = getSuns(arr);
+      
+      if (suns.length !== 0) {
+        suns.forEach(index => drawPixel(index, 'sun'));
+      } else {
+        world.classList.add('night');
+        getStars(arr).forEach(index => drawPixel(index, 'star'));
+      }
+
+      getDiamonds(arr).forEach(index => drawPixel(index, 'diamond'));
+
+      getMount(arr).forEach(index => {
+        const el = document.createElement('div');
+        el.classList.add('mount');
+        el.style.left = index * 10 + 'px';
+        el.style.bottom = '0px';
+        el.style.height = arr[index] + 'px';
+        sky.appendChild(el);
+      });
+
+      getLake(arr).forEach(index => {
+        const el = document.createElement('div');
+        el.classList.add('lake');
+        el.style.left = index * 10 + 'px';
+        el.style.top = '100%';
+        el.style.height = -arr[index] + 'px';
+        sky.appendChild(el);
+      });
+    }
+
+    module.exports = function(arr) {  
+      return {
+        style: `.world {
+          display: block;
+          background: #793b0f;
+        }
+        .sky {
+          display: block;
+          width: 100%;
+          background: #5baef7;
+          position: relative;
+        }
+        .sun,.star,.diamond,.mount,.lake {
+          position: absolute;
+          display: block;
+        }
+        .sun,.star {
+          height: 10px;
+          width: 10px;
+        }
+        .sun:after,.star:after {
+          content: '';
+          display: block;
+          height: 100%;
+          width: 100%;
+          transform: rotate(45deg);
+        }
+        .sun,.sun:after {
+          background: #ff0;
+        }
+        .star,.star:after {
+          background: #fff;
+        }
+        .diamond {
+          height: 10px;
+          width: 10px;
+          background: #fff;
+          transform: rotate(45deg);
+        }
+        .mount {
+          width: 10px;
+          background: #b30;
+        }
+        .lake {
+          width: 10px;
+          background: #0f5ed6;
+        }
+        .night .sky {
+          background: #120078;
+        }
+        .night .sun {
+          display: none;
+        }
+        .night .star {
+          display: block;
+        }
+        .night .mount {
+          background: #5b3500;
+        }
+        .night .lake {
+          background: #036bb5;
+        }`,
+        script: `(${main})([${arr}]);`
+      };  
+    }
+
+    // <-- task end
+
+    // testing:
+
+    const data1 = [0,-10,-20,-30,-20,-10,0,10,-160,0,40,0,140,150,0,-120,0,-20,0,20,10,20,30,40,30,20,10,0];
+    const data2 = [0,-10,-20,-30,-20,-10,160,10,-110,10,0,40,0,90,0,0,150,-130,0,-20,0,20,170,10,20,30,40,30,20,10,0];
+
+    const { script, style } = module.exports(data2);
+
+    const scriptEl = document.createElement('script');
+    scriptEl.setAttribute('type', 'text/javascript');
+    scriptEl.innerText = script.replace(/\n/g, '');
+    
+    const styleEl = document.createElement('style');
+    styleEl.setAttribute('type', 'text/css');
+    styleEl.innerText = style.replace(/\n/g, '');
+
+    document.body.appendChild(scriptEl);
+    document.head.appendChild(styleEl);
+    </script>
+</body>
+</html>
